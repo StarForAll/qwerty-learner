@@ -1,79 +1,78 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FTEQXFKNF"></script>
     <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
 
-      gtag('config', 'G-3FTEQXFKNF')
+        gtag('config', 'G-3FTEQXFKNF')
     </script>
 
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      ;(function (l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search
-            .slice(1)
-            .split('&')
-            .map(function (s) {
-              return s.replace(/~and~/g, '&')
-            })
-            .join('?')
-          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash)
-        }
-      })(window.location)
+        // Single Page Apps for GitHub Pages
+        // MIT License
+        // https://github.com/rafgraph/spa-github-pages
+        // This script checks to see if a redirect is present in the query string,
+        // converts it back into the correct url and adds it to the
+        // browser's history using window.history.replaceState(...),
+        // which won't cause the browser to attempt to load the new url.
+        // When the single page app is loaded further down in this file,
+        // the correct url will be waiting in the browser's history for
+        // the single page app to route accordingly.
+        ;(function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search
+                    .slice(1)
+                    .split('&')
+                    .map(function (s) {
+                    return s.replace(/~and~/g, '&')
+                })
+                    .join('?')
+                window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash)
+            }
+        })(window.location)
     </script>
 
     <title>Qwerty Learner — 为键盘工作者设计的单词与肌肉记忆锻炼软件</title>
     <meta
-      name="description"
-      content="Qwerty Learner, 为键盘工作者设计的单词记忆与英语肌肉记忆锻炼软件 / Words learning and English muscle memory training software designed for keyboard workers"
+            content="Qwerty Learner, 为键盘工作者设计的单词记忆与英语肌肉记忆锻炼软件 / Words learning and English muscle memory training software designed for keyboard workers"
+            name="description"
     />
     <meta
-      name="keywords"
-      content="Qwerty Learner, 打字练习软件, 单词记忆工具, 英语学习, 背单词, 英语肌肉记忆锻炼, 键盘工作者, 免费背单词软件"
+            content="Qwerty Learner, 打字练习软件, 单词记忆工具, 英语学习, 背单词, 英语肌肉记忆锻炼, 键盘工作者, 免费背单词软件"
+            name="keywords"
     />
-    <meta name="author" content="Kaiyi" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#818CF8" />
-    <link rel="source" href="https://github.com/Kaiyiwing/qwerty-learner" />
-    <link rel="source" href="https://qwerty.kaiyi.cool" />
-    <link rel="manifest" href="/manifest.json" />
+    <meta content="xzc" name="author"/>
+    <link href="/favicon.ico" rel="icon"/>
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="#818CF8" name="theme-color"/>
+    <link href="https://qwerty.kaiyi.cool" rel="source"/>
+    <link href="/manifest.json" rel="manifest"/>
 
     <script>
-      // Dark mode init
-      if (
+        // Dark mode init
+        if (
         ('state' in localStorage && JSON.parse(localStorage.state).darkMode) ||
         (!('state' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        document.documentElement.classList.add('dark')
-      }
+        ) {
+            document.documentElement.classList.add('dark')
+        }
     </script>
-  </head>
-  <body>
-    <noscript>
-      <div>You need to enable JavaScript to run QWERTY Learner.</div>
-      <div>你需要启用 JavaScript 来运行 QWERTY Learner。</div>
-    </noscript>
-    <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
-  </body>
+</head>
+<body>
+<noscript>
+    <div>You need to enable JavaScript to run QWERTY Learner.</div>
+    <div>你需要启用 JavaScript 来运行 QWERTY Learner。</div>
+</noscript>
+<div id="root"></div>
+<script src="/src/index.tsx" type="module"></script>
+</body>
 </html>
