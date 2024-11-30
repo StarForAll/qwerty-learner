@@ -27,7 +27,7 @@ export default function DictRequest() {
           <p className="text-sm text-gray-600 dark:text-gray-300">
             如果您有相关的编程基础，可以参考
             <a
-              href="/toBuildDict.md"
+              href="/preview"
               className="px-2 text-blue-500"
               target="_blank"
               rel="noreferrer"

@@ -18,7 +18,7 @@ export default function StarCard() {
     // 直接使用 jotai 的 dismissStartCardDate 其值先是默认值，然后才是 localStorage 中的值
     const value = window.localStorage.getItem(DISMISS_START_CARD_DATE_KEY) as Date | null
     if (value === null) {
-      setIsShow(true)
+      setIsShow(false)
     }
   }, [])
 

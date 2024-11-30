@@ -12,6 +12,7 @@ import React, { Suspense, lazy, useEffect, useState } from 'react'
 import 'react-app-polyfill/stable'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import MarkdownPage from '@/pages/MarkdownPage';
 
 const AnalysisPage = lazy(() => import('./pages/Analysis'))
 const GalleryPage = lazy(() => import('./pages/Gallery-N'))
@@ -58,6 +59,7 @@ function Root() {
                 <Route path="/gallery" element={<GalleryPage />} />
                 <Route path="/analysis" element={<AnalysisPage />} />
                 <Route path="/error-book" element={<ErrorBook />} />
+                <Route path="/preview" element={<MarkdownPage filePath="/toBuildDict.md" />} />
                 <Route path="/*" element={<Navigate to="/" />} />
               </>
             )}
