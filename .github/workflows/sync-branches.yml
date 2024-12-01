@@ -23,6 +23,7 @@ jobs:
       if: steps.check_workflow.outputs.should_run == 'true'
       uses: actions/checkout@v4
       with:
+        ref: myself
         fetch-depth: 0  # 获取完整的提交历史
 
     - name: Sync master branch
@@ -40,9 +41,10 @@ jobs:
       if: steps.check_workflow.outputs.should_run == 'true' && steps.sync_master.outcome == 'success'
       id: merge_master_into_myself
       run: |
-        git checkout myself
-        git merge master
-        git push origin myself
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git pull origin master --no-edit  # 从 master 分支拉取最新更改并合并到当前分支
+          git push origin myself  # 将合并后的结果推送到远程的 myself 分支
 
     - name: Sync dev branch
       if: steps.check_workflow.outputs.should_run == 'true'
@@ -71,8 +73,8 @@ jobs:
       if: steps.check_workflow.outputs.should_run == 'true' && (failure() && steps.sync_master.outcome != 'success' || steps.sync_dev.outcome != 'success' || steps.sync_realkail.outcome != 'success')
       uses: dawidd6/action-send-mail@v4
       with:
-        server_address: smtp-mail.outlook.com
-        server_port: 587
+        server_address: smtp.qiye.aliyun.com
+        server_port: 465
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         from : "GitHub qwerty-learner sync"
@@ -88,8 +90,8 @@ jobs:
       if: steps.check_workflow.outputs.should_run == 'true' && (failure() && steps.merge_master_into_myself.outcome != 'success')
       uses: dawidd6/action-send-mail@v4
       with:
-        server_address: smtp-mail.outlook.com
-        server_port: 587
+        server_address: smtp.qiye.aliyun.com
+        server_port: 465
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         from : "GitHub qwerty-learner merge"
