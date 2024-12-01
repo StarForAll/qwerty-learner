@@ -23,7 +23,6 @@ jobs:
       if: steps.check_workflow.outputs.should_run == 'true'
       uses: actions/checkout@v4
       with:
-        ref: myself
         fetch-depth: 0  # 获取完整的提交历史
 
     - name: Sync master branch
@@ -43,8 +42,9 @@ jobs:
       run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git pull origin master --no-edit  # 从 master 分支拉取最新更改并合并到当前分支
-          git push origin myself  # 将合并后的结果推送到远程的 myself 分支
+          git checkout myself
+          git merge master --no-ff  # 使用 --no-ff 选项以保留合并历史
+          git push origin myself
 
     - name: Sync dev branch
       if: steps.check_workflow.outputs.should_run == 'true'
