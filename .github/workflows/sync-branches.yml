@@ -30,10 +30,11 @@ jobs:
       id: sync_master
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
       with:
-        upstream_repository: "RealKai42/qwerty-learner"
-        upstream_branch: "master"
-        target_branch: "master"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_repository: RealKai42/qwerty-learner
+        upstream_branch: master
+        target_branch: master
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Merge master into myself
       if: steps.check_workflow.outputs.should_run == 'true' && steps.sync_master.outcome == 'success'
@@ -48,10 +49,11 @@ jobs:
       id: sync_dev
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
       with:
-        upstream_repository: "RealKai42/qwerty-learner"
-        upstream_branch: "dev"
-        target_branch: "dev"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_repository: RealKai42/qwerty-learner
+        upstream_branch: dev
+        target_branch: dev
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
 
 
     - name: Sync RealKail branch
@@ -60,9 +62,10 @@ jobs:
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
       with:
         upstream_repository: "RealKai42/qwerty-learner"
-        upstream_branch: "RealKai42-patch-1"
-        target_branch: "RealKai42-patch-1"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_branch: RealKai42-patch-1
+        target_branch: RealKai42-patch-1
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Send email notification on sync failure
       if: steps.check_workflow.outputs.should_run == 'true' && (failure() && steps.sync_master.outcome != 'success' || steps.sync_dev.outcome != 'success' || steps.sync_realkail.outcome != 'success')
