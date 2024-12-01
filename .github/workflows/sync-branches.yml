@@ -13,7 +13,7 @@ jobs:
     - name: Check if this workflow should run
       id: check_workflow
       run: |
-        if [[ "${{ env.WORKFLOW_TO_RUN }}" == "sync-branches" ]]; then 
+        if [[ "${{ vars.WORKFLOW_TO_RUN }}" == "sync-branches" ]]; then 
           echo "should_run=true" >> $GITHUB_OUTPUT
         else
           echo "should_run=false" >> $GITHUB_OUTPUT
