@@ -13,10 +13,10 @@ jobs:
     - name: Check if this workflow should run
       id: check_workflow
       run: |
-        if [[ "${{ env.WORKFLOW_TO_RUN }}" == "sync-branches" ]]; then
-          echo "::set-output name=should_run::true"
+        if [[ "${{ env.WORKFLOW_TO_RUN }}" == "sync-branches" ]]; then 
+          echo "should_run=true" >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=should_run::false"
+          echo "should_run=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Checkout fork repository
