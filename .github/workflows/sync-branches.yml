@@ -1,0 +1,101 @@
+name: Sync Branches from Upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  
+  workflow_dispatch:  
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if this workflow should run
+      id: check_workflow
+      run: |
+        if [[ "${{ vars.WORKFLOW_TO_RUN }}" == "sync-branches" ]]; then 
+          echo "should_run=true" >> $GITHUB_OUTPUT
+        else
+          echo "should_run=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Checkout fork repository
+      if: steps.check_workflow.outputs.should_run == 'true'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取完整的提交历史
+
+    - name: Sync master branch
+      if: steps.check_workflow.outputs.should_run == 'true'
+      id: sync_master
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+      with:
+        upstream_sync_repo: RealKai42/qwerty-learner
+        upstream_sync_branch: master
+        target_sync_branch: master
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Merge master into myself
+      if: steps.check_workflow.outputs.should_run == 'true' && steps.sync_master.outcome == 'success'
+      id: merge_master_into_myself
+      run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git checkout myself
+          git merge master --no-ff  # 使用 --no-ff 选项以保留合并历史
+          git push origin myself
+
+    - name: Sync dev branch
+      if: steps.check_workflow.outputs.should_run == 'true'
+      id: sync_dev
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+      with:
+        upstream_sync_repo: RealKai42/qwerty-learner
+        upstream_sync_branch: dev
+        target_sync_branch: dev
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+    - name: Sync RealKail branch
+      if: steps.check_workflow.outputs.should_run == 'true'
+      id: sync_realkail
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+      with:
+        upstream_sync_repo: "RealKai42/qwerty-learner"
+        upstream_sync_branch: RealKai42-patch-1
+        target_sync_branch: RealKai42-patch-1
+        upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Send email notification on sync failure
+      if: steps.check_workflow.outputs.should_run == 'true' && (failure() && steps.sync_master.outcome != 'success' || steps.sync_dev.outcome != 'success' || steps.sync_realkail.outcome != 'success')
+      uses: dawidd6/action-send-mail@v4
+      with:
+        server_address: smtp.qiye.aliyun.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        from : "GitHub qwerty-learner sync"
+        subject: "GitHub Actions: Branch Sync Failed"
+        body: |
+          The following branches failed to sync:
+          - master: ${{ steps.sync_master.outcome }}
+          - dev: ${{ steps.sync_dev.outcome }}
+          - my: ${{ steps.sync_realkail.outcome }}
+        to: ${{ secrets.TO_EMAIL_USERNAME }}
+
+    - name: Send email notification on merge failure
+      if: steps.check_workflow.outputs.should_run == 'true' && (failure() && steps.merge_master_into_myself.outcome != 'success')
+      uses: dawidd6/action-send-mail@v4
+      with:
+        server_address: smtp.qiye.aliyun.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        from : "GitHub qwerty-learner merge"
+        subject: "GitHub Actions: Merge Failed"
+        body: |
+          The merge of master into myself failed.
+        to: ${{ secrets.TO_EMAIL_USERNAME }}

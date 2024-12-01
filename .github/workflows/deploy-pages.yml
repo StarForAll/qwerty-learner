@@ -12,24 +12,44 @@ jobs:
       matrix:
         node-version: [18.17.0]
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
+     - name: Check if this workflow should run
+       if: steps.check_workflow.outputs.should_run == 'true'
+       id: check_workflow
+       run: |
+        if [[ "${{ env.WORKFLOW_TO_RUN }}" == "deploy-pages" ]]; then
+          echo "::set-output name=should_run::true"
+        else
+          echo "::set-output name=should_run::false"
+        fi
+
+
+     - uses: actions/checkout@v3
+     - name: Use Node.js ${{ matrix.node-version }}
+       if: steps.check_workflow.outputs.should_run == 'true'
+       uses: actions/setup-node@v3
+       with:
           node-version: ${{ matrix.node-version }}
-      - name: Install Packages
-        run: yarn
-      - name: Build page
-        run: yarn build
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
+          
+     - name: Install Packages
+       if: steps.check_workflow.outputs.should_run == 'true'
+       run: yarn
+       
+     - name: Build page
+       if: steps.check_workflow.outputs.should_run == 'true'
+       run: yarn build
+       
+     - name: Deploy to gh-pages
+       if: steps.check_workflow.outputs.should_run == 'true'
+       uses: peaceiris/actions-gh-pages@v3
+       with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./build
-      - name: Sync to Gitee
-        uses: wearerequired/git-mirror-action@master
-        env:
+          
+     - name: Sync to Gitee
+       if: steps.check_workflow.outputs.should_run == 'true'
+       uses: wearerequired/git-mirror-action@master
+       env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE }}
-        with:
-          source-repo: git@github.com:Kaiyiwing/qwerty-learner.git
-          destination-repo: git@gitee.com:KaiyiWing/qwerty-learner.git
+       with:
+          source-repo: git@github.com:StarForAll/qwerty-learner.git
+          destination-repo: git@gitee.com:StarForAll/qwerty-learner.git
