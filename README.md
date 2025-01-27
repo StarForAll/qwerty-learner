@@ -7,8 +7,8 @@
 </h1>
 
 <p align="center">
-  <a href="./docs/README_EN.md">English</a>  
-  <a href="./docs/README_JP.md">日本語</a>  
+  <a href="./docs/README_EN.md">English</a>
+  <a href="./docs/README_JP.md">日本語</a>
 </p>
 
 <p align="center">
@@ -33,17 +33,17 @@
 
 ## 📸 在线访问
 
-**首选部署**: <https://qwerty.kaiyi.cool/>  
+**首选部署**: <https://qwerty.kaiyi.cool/>
 GitHub Pages: <https://realkai42.github.io/qwerty-learner/>
 
-镜像仓库:  
-[GitCode: RealKai42/qwerty-learner](https://gitcode.com/RealKai42/qwerty-learner/overview)  
-[Gitee: KaiyiWing/qwerty-learner)](https://gitee.com/KaiyiWing/qwerty-learner)
+镜像仓库:
+[GitCode: RealKai42/qwerty-learner](https://gitcode.com/RealKai42/qwerty-learner/overview)
+[Gitee: KaiyiWing/qwerty-learner](https://gitee.com/KaiyiWing/qwerty-learner)
 <br/>
 <br/>
 
-项目已发布 VSCode 插件版，一键启动、随时开始练习  
-[VSCode Plugin Market](https://marketplace.visualstudio.com/items?itemName=Kaiyi.qwerty-learner)  
+项目已发布 VSCode 插件版，一键启动、随时开始练习
+[VSCode Plugin Market](https://marketplace.visualstudio.com/items?itemName=Kaiyi.qwerty-learner)
 [GitHub](https://github.com/Realkai42/qwerty-learner-vscode)
 
 <br />
@@ -135,13 +135,40 @@ GitHub Pages: <https://realkai42.github.io/qwerty-learner/>
 
 本项目是基于`React`开发的，需要 node 环境来运行。
 
+### 环境准备
+
+1. NodeJS
+2. Git
+3. Yarn
+
+> **验证是否已经拥有相关环境**
+>
+> 1. 手动验证  
+>    请在命令行下执行以下命令，查看是否有对应版本输出
+>
+>    ```sh
+>    node --version
+>    git --version
+>    yarn --version
+>    ```
+>
+> 2. 脚本验证  
+>    使用我们提供的脚本对所需环境进行验证，如果确实依赖项会自动安装
+>    - Windows 用户可以直接执行 [pre-check.ps1](scripts/pre-check.ps1) 脚本
+>    - MacOS 用户可以直接执行 [pre-check.sh](scripts/pre-check.sh) 脚本
+
+如果有对应环境缺失，我们可以参考下列官方文档进行安装
+
+> - [NodeJS](https://nodejs.org/en/download)
+> - [Git](https://git-scm.com/downloads)
+> - [yarn](https://classic.yarnpkg.com/lang/en/docs/install)
+
 ### 手动安装
 
-1. 安装 NodeJS，参考[官方文档](https://nodejs.org/en/download)
-2. 使用 `git clone` 下载项目到本地, 不使用 git 可能因为缺少依赖而无法运行
-3. 打开命令行，在项目根目录下，运行`yarn install`来下载依赖。
-4. 执行`yarn start`来启动项目，项目默认地址为`http://localhost:5173/`
-5. 在浏览器中打开`http://localhost:5173/`来访问项目。
+1. 在命令行中执行 `git clone https://github.com/RealKai42/qwerty-learner.git` 将项目拉取到本地, 如果不使用 git 可能因为缺少依赖而无法运行
+2. 在命令行中执行 `cd qwerty-learner`，进入项目根目录，执行`yarn install`来下载依赖。
+3. 执行`yarn start`来启动项目，项目默认地址为`http://localhost:5173/`
+4. 在浏览器中打开`http://localhost:5173/`来访问项目。
 
 ### 脚本执行
 
